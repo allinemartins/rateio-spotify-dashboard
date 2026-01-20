@@ -25,7 +25,12 @@ export type Item = {
 };
 
 export async function fetchItems(): Promise<Item[]> {
-  const res = await fetch(RAW_CSV_URL);  
+  const url = `${RAW_CSV_URL}?t=${Date.now()}`;
+
+  const res = await fetch(url, {
+    cache: "no-store",
+  });
+
   if (!res.ok) throw new Error(`Erro ao baixar CSV: ${res.status}`);
 
   const text = await res.text();
